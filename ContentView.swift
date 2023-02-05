@@ -250,6 +250,7 @@ struct ContentView: View {
             Form {
                 Section {
                     TextField("Value:", value: $input, format: .number)
+                        .keyboardType(.decimalPad)
                     Picker("Choose the type", selection: $unitTypeSelected) {
                         ForEach(unitTypes, id: \.self) {
                             Text($0)
