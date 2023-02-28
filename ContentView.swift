@@ -75,10 +75,10 @@ struct ContentView: View {
                         Spacer()
                     }
                 }
-                
+
                 Section {
                     Picker("Choose the output unit", selection: $outputUnit) {
-                        ForEach(units[unitTypeSelected], id: \.self) {
+                        ForEach(units[unitTypeSelected].filter { $0 != inputUnit }, id: \.self) {
                             Text(formatter.string(from: $0))
                         }
                     }
