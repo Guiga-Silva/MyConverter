@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var input = 0.0
+    @State private var input = 100.0
     @State private var inputUnit: Dimension = UnitLength.meters
     @State private var outputUnit: Dimension = UnitLength.centimeters
     @State var unitTypeSelected: Int = 0
@@ -25,13 +25,20 @@ struct ContentView: View {
 
     @FocusState private var inputIsFocused: Bool
     
+    let formatter: MeasurementFormatter
+    
+    init() {
+            formatter = MeasurementFormatter()
+            formatter.unitOptions = .providedUnit
+            formatter.unitStyle = .long
+    }
 
     var output: String {
 
         let inputMeasurement = Measurement(value: input, unit: inputUnit)
-        var outputMeasurement = inputMeasurement.converted(to: outputUnit)
+        let outputMeasurement = inputMeasurement.converted(to: outputUnit)
         
-        return MeasurementFormatter().string(from: outputMeasurement)
+        return formatter.string(from: outputMeasurement)
     }
 
 
@@ -52,7 +59,7 @@ struct ContentView: View {
 
                     Picker("Choose the unit", selection: $inputUnit) {
                         ForEach(units[unitTypeSelected], id: \.self) {
-                            Text(MeasurementFormatter().string(from: $0))
+                            Text(formatter.string(from: $0))
                         }
                     }
                 } header: {
@@ -62,7 +69,7 @@ struct ContentView: View {
                 Section {
                     Picker("Choose the output unit", selection: $outputUnit) {
                         ForEach(units[unitTypeSelected], id: \.self) {
-                            Text(MeasurementFormatter().string(from: $0))
+                            Text(formatter.string(from: $0))
                         }
                     }
 
