@@ -66,6 +66,16 @@ struct ContentView: View {
                     Text("type the input to be converted")
                 }
 
+                Button {
+                     invertUnits()
+                } label: {
+                    HStack {
+                        Spacer()
+                        Text("Invert units")
+                        Spacer()
+                    }
+                }
+                
                 Section {
                     Picker("Choose the output unit", selection: $outputUnit) {
                         ForEach(units[unitTypeSelected], id: \.self) {
@@ -97,6 +107,15 @@ struct ContentView: View {
                 outputUnit = unitTypes[$0]
             }
         }
+    }
+    
+    func invertUnits() {
+        
+        let temp: Dimension
+        
+        temp = inputUnit
+        inputUnit = outputUnit
+        outputUnit = temp
     }
 }
 
